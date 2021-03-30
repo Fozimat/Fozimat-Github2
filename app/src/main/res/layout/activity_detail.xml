@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".DetailActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        style="@style/MyCustomImage"
+        android:id="@+id/img_avatar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        tools:src="@tools:sample/avatars" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/img_avatar"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/MyCustomRepoFollow">
+
+            <TextView
+                android:id="@+id/tvRepository"
+                style="@style/MyCustom_Zero"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repositories"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MyCustomRepoFollow">
+
+            <TextView
+                android:id="@+id/tvFollowers"
+                style="@style/MyCustom_Zero"/>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/followers"/>
+        </LinearLayout>
+
+        <LinearLayout
+          style="@style/MyCustomRepoFollow">
+
+            <TextView
+                android:id="@+id/tvFollowing"
+                style="@style/MyCustom_Zero"/>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/following"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/MyCustomTagName"
+        android:layout_below="@id/img_avatar"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:text="@string/name"/>
+
+    <TextView
+        android:id="@+id/tv_company"
+        style="@style/MyCustomTagName"
+        android:layout_below="@id/tv_name"
+        android:text="@string/company"/>
+
+    <TextView
+        android:id="@+id/tv_location"
+        style="@style/MyCustomTagName"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/tv_company"
+        android:text="@string/location"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:tabIndicatorColor="@color/blue_300"
+        app:tabIndicatorHeight="4dp"
+        android:layout_below="@id/tv_location"
+        app:tabTextColor="@android:color/white"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_below="@id/tabs"
+        android:layout_marginTop="5dp"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Fozimat-Github</string>
+    <string name="input_username">Input username</string>
+    <string name="search_user">Search User</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="detail_user">Detail User</string>
+    <string name="name">Name</string>
+    <string name="search">Search</string>
+    <string name="location">Location</string>
+    <string name="company">Company</string>
+    <string name="following">Following</string>
+    <string name="_zero">0</string>
+    <string name="followers">Followers</string>
+    <string name="repositories">Repositories</string>
+    <string name="settings">Settings</string>
+</resources>

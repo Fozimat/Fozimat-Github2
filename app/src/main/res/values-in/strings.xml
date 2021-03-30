@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fozimat-Github</string>
+    <string name="input_username">Masukkan Pengguna</string>
+    <string name="search_user">Cari Pengguna</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="detail_user">Detail Pengguna</string>
+    <string name="name">Nama</string>
+    <string name="search">Cari</string>
+    <string name="location">Lokasi</string>
+    <string name="company">Perusahaan</string>
+    <string name="following">Mengikuti</string>
+    <string name="_zero">0</string>
+    <string name="followers">Pengikut</string>
+    <string name="repositories">Repositori</string>
+    <string name="settings">Pengaturan</string>
+</resources>
