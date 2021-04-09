@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fozimat.fozimat_github.adapter.UserAdapter
 import com.fozimat.fozimat_github.databinding.ActivityMainBinding
+import com.fozimat.fozimat_github.db.UserHelper
 import com.fozimat.fozimat_github.model.User
 import com.fozimat.fozimat_github.viewModel.MainViewModel
 
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
         binding.rvUser.setHasFixedSize(true)
 
         showRecyclerView()
+
+        val userHelper = UserHelper.getInstance(applicationContext)
+        userHelper.open()
 
         mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
 
@@ -80,9 +84,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.action_settings) {
-            val act = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(act)
+        when(item.itemId) {
+            R.id.action_settings -> {
+                val act = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(act)
+            }
+            R.id.action_fav -> {
+                val fav = Intent(this, FavoriteActivity::class.java)
+                startActivity(fav)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

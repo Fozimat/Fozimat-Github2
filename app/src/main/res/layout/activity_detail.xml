@@ -15,6 +15,7 @@
         tools:src="@tools:sample/avatars" />
 
     <LinearLayout
+        android:id="@+id/linearFollow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/img_avatar"
@@ -73,9 +74,15 @@
         android:text="@string/name"/>
 
     <TextView
-        android:id="@+id/tv_company"
+        android:id="@+id/tv_login"
         style="@style/MyCustomTagName"
         android:layout_below="@id/tv_name"
+        android:text="@string/login"/>
+
+    <TextView
+        android:id="@+id/tv_company"
+        style="@style/MyCustomTagName"
+        android:layout_below="@id/tv_login"
         android:text="@string/company"/>
 
     <TextView
@@ -84,6 +91,18 @@
         android:layout_marginBottom="10dp"
         android:layout_below="@id/tv_company"
         android:text="@string/location"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearFollow"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="75dp"
+        android:paddingBottom="20dp"
+        android:src="@drawable/ic_favorite"/>
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

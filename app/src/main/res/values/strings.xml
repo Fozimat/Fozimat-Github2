@@ -13,4 +13,7 @@
     <string name="followers">Followers</string>
     <string name="repositories">Repositories</string>
     <string name="settings">Settings</string>
+    <string name="login">Username</string>
+    <string name="favorite">Favorite</string>
+    <string name="reminder">Reminder</string>
 </resources>
