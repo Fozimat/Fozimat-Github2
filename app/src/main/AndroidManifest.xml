@@ -22,11 +22,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailActivity"
-            android:label="@string/detail_user" />
+            android:name=".DetailActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/search_user"></activity>
+            android:label="@string/search_user">
+        </activity>
     </application>
 
 </manifest>

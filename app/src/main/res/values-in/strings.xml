@@ -14,4 +14,7 @@
     <string name="followers">Pengikut</string>
     <string name="repositories">Repositori</string>
     <string name="settings">Pengaturan</string>
+    <string name="login">Pengguna</string>
+    <string name="favorite">Favorit</string>
+    <string name="reminder">Pengingat</string>
 </resources>

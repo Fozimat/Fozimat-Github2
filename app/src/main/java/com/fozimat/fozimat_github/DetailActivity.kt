@@ -56,9 +56,9 @@ class DetailActivity : AppCompatActivity() {
         detailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailViewModel::class.java)
 
         user.login?.let {
+            supportActionBar?.title= it
             detailViewModel.setDetailUser(it)
         }
-
 
         detailViewModel.getDetailUser().observe(this, {
             binding.apply {
@@ -69,7 +69,6 @@ class DetailActivity : AppCompatActivity() {
                 tvFollowers.text = it.followers.toString()
                 tvFollowing.text = it.following.toString()
                 tvName.text = it.name
-                tvLogin.text = it.login
                 tvLocation.text = it.location
                 tvCompany.text = it.company
                 tvRepository.text = it.repository.toString()
@@ -101,9 +100,15 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.action_settings) {
-            val act = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(act)
+        when(item.itemId) {
+            R.id.action_settings -> {
+                val act = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(act)
+            }
+            R.id.action_fav -> {
+                val fav = Intent(this, FavoriteActivity::class.java)
+                startActivity(fav)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -120,7 +125,7 @@ class DetailActivity : AppCompatActivity() {
         val user = intent.getParcelableExtra<User>(EXTRA_USERNAME) as User
 
         val name = binding.tvName.text.toString()
-        val login = binding.tvLogin.text.toString()
+        val login = supportActionBar?.title.toString()
         val company = binding.tvCompany.text.toString()
         val location = binding.tvLocation.text.toString()
         val followers = binding.tvFollowers.text.toString()
@@ -130,6 +135,7 @@ class DetailActivity : AppCompatActivity() {
         val favorite = "true"
 
         val values = ContentValues()
+
         values.put(NAME, name)
         values.put(LOGIN, login)
         values.put(COMPANY, company)

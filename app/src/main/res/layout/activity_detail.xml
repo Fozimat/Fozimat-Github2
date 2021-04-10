@@ -74,15 +74,9 @@
         android:text="@string/name"/>
 
     <TextView
-        android:id="@+id/tv_login"
-        style="@style/MyCustomTagName"
-        android:layout_below="@id/tv_name"
-        android:text="@string/login"/>
-
-    <TextView
         android:id="@+id/tv_company"
         style="@style/MyCustomTagName"
-        android:layout_below="@id/tv_login"
+        android:layout_below="@id/tv_name"
         android:text="@string/company"/>
 
     <TextView
@@ -97,11 +91,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearFollow"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="75dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="50dp"
         android:paddingBottom="20dp"
-        android:src="@drawable/ic_favorite"/>
+        android:src="@drawable/ic_favorite"
+        android:contentDescription="@string/favorite" />
 
 
     <com.google.android.material.tabs.TabLayout
