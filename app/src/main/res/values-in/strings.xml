@@ -17,4 +17,6 @@
     <string name="login">Pengguna</string>
     <string name="favorite">Favorit</string>
     <string name="reminder">Pengingat</string>
+    <string name="add_success">Berhasil ditambahkan ke favorit</string>
+    <string name="deleted_success">Data berhasil dihapus</string>
 </resources>

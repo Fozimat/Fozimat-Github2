@@ -1,7 +1,11 @@
 package com.fozimat.fozimat_github
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fozimat.fozimat_github.adapter.FavoriteAdapter
@@ -53,10 +57,10 @@ class FavoriteActivity : AppCompatActivity() {
     private fun loadUserAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             binding.progressbar.visibility = View.VISIBLE
-            val noteHelper = UserHelper.getInstance(applicationContext)
-            noteHelper.open()
+            val noteUser = UserHelper.getInstance(applicationContext)
+            noteUser.open()
             val deferredNotes = async(Dispatchers.IO) {
-                val cursor = noteHelper.queryAll()
+                val cursor = noteUser.queryAll()
                 MappingHelper.mapCursorToArrayList(cursor)
             }
             binding.progressbar.visibility = View.INVISIBLE
@@ -67,8 +71,13 @@ class FavoriteActivity : AppCompatActivity() {
                 adapter.listUser = ArrayList()
                 showSnackbarMessage("Tidak ada data saat ini")
             }
-            noteHelper.close()
+            noteUser.close()
         }
+    }
+
+    override fun onResume() {
+        loadUserAsync()
+        super.onResume()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -79,5 +88,25 @@ class FavoriteActivity : AppCompatActivity() {
     private fun showSnackbarMessage(message: String) {
         Snackbar.make(binding.rvUser, message, Snackbar.LENGTH_SHORT).show()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_settings -> {
+                val act = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(act)
+            }
+            R.id.action_fav -> {
+                val fav = Intent(this, FavoriteActivity::class.java)
+                startActivity(fav)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
 }

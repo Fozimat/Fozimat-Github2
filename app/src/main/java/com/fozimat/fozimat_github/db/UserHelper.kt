@@ -4,8 +4,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.LOGIN
 import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.TABLE_NAME
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion._ID
 import java.sql.SQLException
 
 class UserHelper(context: Context) {
@@ -43,7 +43,7 @@ class UserHelper(context: Context) {
             null,
             null,
             null,
-            "$_ID ASC",
+            "$LOGIN ASC",
             null)
     }
 
@@ -51,8 +51,12 @@ class UserHelper(context: Context) {
         return database.insert(DATABASE_TABLE, null, values)
     }
 
+    fun queryById(id: String): Cursor {
+        return database.query(DATABASE_TABLE, null, "$LOGIN = ?", arrayOf(id), null, null, null, null)
+    }
+
     fun deleteById(id: String): Int {
-        return database.delete(DATABASE_TABLE, "$_ID = '$id'", null)
+        return database.delete(DATABASE_TABLE, "$LOGIN = '$id'", null)
     }
 
 

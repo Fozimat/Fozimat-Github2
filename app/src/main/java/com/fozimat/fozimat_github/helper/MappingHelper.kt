@@ -10,7 +10,6 @@ import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.LOCA
 import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.LOGIN
 import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.NAME
 import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.REPOSITORY
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion._ID
 import com.fozimat.fozimat_github.model.User
 
 object MappingHelper {
@@ -20,7 +19,6 @@ object MappingHelper {
 
         userCursor?.apply {
             while(moveToNext()) {
-                val id = getInt(getColumnIndexOrThrow(_ID))
                 val login = getString(getColumnIndexOrThrow(LOGIN))
                 val name = getString(getColumnIndexOrThrow(NAME))
                 val location = getString(getColumnIndexOrThrow(LOCATION))
@@ -30,7 +28,7 @@ object MappingHelper {
                 val following = getInt(getColumnIndexOrThrow(FOLLOWING))
                 val avatar = getString(getColumnIndexOrThrow(AVATAR))
                 val favorite = getString(getColumnIndexOrThrow(FAVORITE))
-                userList.add(User(id, login, name, location, repository, company, followers, following, avatar, favorite))
+                userList.add(User(login, name, location, repository, company, followers, following, avatar, favorite))
             }
         }
         return userList

@@ -7,7 +7,6 @@ internal class DatabaseContract {
     internal class NoteColumns : BaseColumns {
         companion object {
             const val TABLE_NAME = "tb_favorite"
-            const val _ID = "_id"
             const val LOGIN = "login"
             const val NAME = "name"
             const val LOCATION = "location"

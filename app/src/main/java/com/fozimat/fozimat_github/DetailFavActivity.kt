@@ -6,48 +6,39 @@ import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.StringRes
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fozimat.fozimat_github.adapter.SectionsPagerAdapter
 import com.fozimat.fozimat_github.databinding.ActivityDetailBinding
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.AVATAR
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.COMPANY
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.FAVORITE
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.FOLLOWERS
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.FOLLOWING
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.LOCATION
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.LOGIN
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.NAME
-import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.REPOSITORY
+import com.fozimat.fozimat_github.db.DatabaseContract
 import com.fozimat.fozimat_github.db.UserHelper
 import com.fozimat.fozimat_github.helper.MappingHelper
 import com.fozimat.fozimat_github.model.User
-import com.fozimat.fozimat_github.viewModel.DetailViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 
-class DetailActivity : AppCompatActivity(), View.OnClickListener {
+class DetailFavActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailViewModel: DetailViewModel
     private lateinit var userHelper: UserHelper
     private var isFavorite: Boolean = false
 
     companion object {
-        const val EXTRA_USERNAME = "extra_username"
+        const val EXTRA_USERNAME_FAV = "extra_username_fav"
+        const val EXTRA_POSITION = "extra_position"
 
         @StringRes
         private val TAB_TITLES = intArrayOf(
-            R.string.followers,
-            R.string.following
+                R.string.followers,
+                R.string.following
         )
-    }
 
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,40 +48,34 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         userHelper = UserHelper.getInstance(applicationContext)
         userHelper.open()
 
-        detailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailViewModel::class.java)
-
-        setTitleFav()
-
-        detailViewModel.getDetailUser().observe(this, {
-            binding.apply {
-                Glide.with(this@DetailActivity)
-                        .load(it.avatar)
-                        .apply(RequestOptions())
-                        .into(imgAvatar)
-                tvFollowers.text = it.followers.toString()
-                tvFollowing.text = it.following.toString()
-                tvName.text = it.name
-                tvLocation.text = it.location
-                tvCompany.text = it.company
-                tvRepository.text = it.repository.toString()
-            }
-        })
-
         binding.btnFav.setOnClickListener(this)
-        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME) as User
-        val cursor: Cursor = userHelper.queryById(user.login.toString())
+
+        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
+        val cursor: Cursor = userHelper.queryById(user.name.toString())
         if (cursor.moveToNext()){
             isFavorite = true
             setStatusFavorite(isFavorite)
         }
         checkFav(cursor)
+        setTitleFav()
+        setFav()
         setViewPager()
     }
 
+    private fun checkFav(cursor: Cursor) {
+        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
+        val fav = MappingHelper.mapCursorToArrayList(cursor)
+        for(data in fav){
+            if(user.name == data.login){
+                isFavorite= true
+            }
+        }
+    }
+
     private fun setViewPager() {
-        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME) as User
+        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
         val sectionsPagerAdapter = SectionsPagerAdapter(this)
-        sectionsPagerAdapter.username = user.login.toString()
+        sectionsPagerAdapter.username = user.name.toString()
         val viewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs = binding.tabs
@@ -101,10 +86,25 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setTitleFav() {
-        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME) as User
-        user.login?.let {
+        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
+        user.name?.let {
             supportActionBar?.title= it
-            detailViewModel.setDetailUser(it)
+        }
+    }
+
+    private fun setFav() {
+        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
+        binding.apply {
+            Glide.with(this@DetailFavActivity)
+                    .load(user.avatar)
+                    .apply(RequestOptions())
+                    .into(imgAvatar)
+            tvFollowers.text = user.followers.toString()
+            tvFollowing.text = user.following.toString()
+            tvName.text = user.login
+            tvLocation.text = user.location
+            tvCompany.text = user.company
+            tvRepository.text = user.repository.toString()
         }
     }
 
@@ -135,18 +135,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun checkFav(cursor: Cursor) {
-        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME) as User
-        val fav = MappingHelper.mapCursorToArrayList(cursor)
-        for(data in fav){
-            if(user.login == data.login){
-                isFavorite= true
-            }
-        }
-    }
-
     private fun insertData() {
-        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME) as User
+        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
+
         val name = binding.tvName.text.toString()
         val login = supportActionBar?.title.toString()
         val company = binding.tvCompany.text.toString()
@@ -159,15 +150,15 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
         val values = ContentValues()
 
-        values.put(NAME, name)
-        values.put(LOGIN, login)
-        values.put(COMPANY, company)
-        values.put(LOCATION, location)
-        values.put(FOLLOWERS, followers)
-        values.put(FOLLOWING, following)
-        values.put(REPOSITORY, repository)
-        values.put(AVATAR, avatar)
-        values.put(FAVORITE, favorite)
+        values.put(DatabaseContract.NoteColumns.NAME, name)
+        values.put(DatabaseContract.NoteColumns.LOGIN, login)
+        values.put(DatabaseContract.NoteColumns.COMPANY, company)
+        values.put(DatabaseContract.NoteColumns.LOCATION, location)
+        values.put(DatabaseContract.NoteColumns.FOLLOWERS, followers)
+        values.put(DatabaseContract.NoteColumns.FOLLOWING, following)
+        values.put(DatabaseContract.NoteColumns.REPOSITORY, repository)
+        values.put(DatabaseContract.NoteColumns.AVATAR, avatar)
+        values.put(DatabaseContract.NoteColumns.FAVORITE, favorite)
 
         userHelper.insert(values)
 
@@ -196,10 +187,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun deleteData() {
-        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME) as User
-        userHelper.deleteById(user.login.toString()).toLong()
-        showSnackbarMessage("Data success deleted")
+        val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
+        userHelper.deleteById(user.name.toString())
+        val message = resources.getString(R.string.deleted_success)
+        showSnackbarMessage(message)
     }
-
-
 }

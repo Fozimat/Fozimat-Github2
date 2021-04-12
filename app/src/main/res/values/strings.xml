@@ -17,4 +17,6 @@
     <string name="login">Username</string>
     <string name="favorite">Favorite</string>
     <string name="reminder">Reminder</string>
+    <string name="add_success">Success added to favorites</string>
+    <string name="deleted_success">Data success deleted</string>
 </resources>
