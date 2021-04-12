@@ -1,8 +1,11 @@
 package com.fozimat.fozimat_github
 
 import android.content.Intent
+import android.database.ContentObserver
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +13,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fozimat.fozimat_github.adapter.FavoriteAdapter
 import com.fozimat.fozimat_github.databinding.ActivityFavoriteBinding
+import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.fozimat.fozimat_github.db.UserHelper
 import com.fozimat.fozimat_github.helper.MappingHelper
 import com.fozimat.fozimat_github.model.User
@@ -37,6 +41,18 @@ class FavoriteActivity : AppCompatActivity() {
 
         showRecycleView()
 
+        val handlerThread = HandlerThread("DataObserver")
+        handlerThread.start()
+        val handler = Handler(handlerThread.looper)
+
+        val myObserver = object: ContentObserver(handler) {
+            override fun onChange(selfChange: Boolean) {
+                loadUserAsync()
+            }
+        }
+
+        contentResolver.registerContentObserver(CONTENT_URI, true, myObserver)
+
         if(savedInstanceState == null) {
             loadUserAsync()
         } else {
@@ -60,7 +76,7 @@ class FavoriteActivity : AppCompatActivity() {
             val noteUser = UserHelper.getInstance(applicationContext)
             noteUser.open()
             val deferredNotes = async(Dispatchers.IO) {
-                val cursor = noteUser.queryAll()
+                val cursor = contentResolver.query(CONTENT_URI, null, null, null, null)
                 MappingHelper.mapCursorToArrayList(cursor)
             }
             binding.progressbar.visibility = View.INVISIBLE

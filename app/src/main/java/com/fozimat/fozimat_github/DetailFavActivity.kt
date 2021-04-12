@@ -3,10 +3,10 @@ package com.fozimat.fozimat_github
 import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.fozimat.fozimat_github.adapter.SectionsPagerAdapter
 import com.fozimat.fozimat_github.databinding.ActivityDetailBinding
 import com.fozimat.fozimat_github.db.DatabaseContract
+import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.fozimat.fozimat_github.db.UserHelper
 import com.fozimat.fozimat_github.helper.MappingHelper
 import com.fozimat.fozimat_github.model.User
@@ -27,6 +28,7 @@ class DetailFavActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var userHelper: UserHelper
     private var isFavorite: Boolean = false
+    private lateinit var uriWithId: Uri
 
     companion object {
         const val EXTRA_USERNAME_FAV = "extra_username_fav"
@@ -51,6 +53,7 @@ class DetailFavActivity : AppCompatActivity(), View.OnClickListener {
         binding.btnFav.setOnClickListener(this)
 
         val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
+
         val cursor: Cursor = userHelper.queryById(user.name.toString())
         if (cursor.moveToNext()){
             isFavorite = true
@@ -160,7 +163,7 @@ class DetailFavActivity : AppCompatActivity(), View.OnClickListener {
         values.put(DatabaseContract.NoteColumns.AVATAR, avatar)
         values.put(DatabaseContract.NoteColumns.FAVORITE, favorite)
 
-        userHelper.insert(values)
+        contentResolver.insert(CONTENT_URI, values)
 
         val message = resources.getString(R.string.add_success)
         showSnackbarMessage(message)
@@ -188,7 +191,8 @@ class DetailFavActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun deleteData() {
         val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
-        userHelper.deleteById(user.name.toString())
+        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.name)
+        contentResolver.delete(uriWithId, null, null)
         val message = resources.getString(R.string.deleted_success)
         showSnackbarMessage(message)
     }

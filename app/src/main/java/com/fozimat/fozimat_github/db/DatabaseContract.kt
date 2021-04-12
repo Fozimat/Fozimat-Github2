@@ -1,10 +1,14 @@
 package com.fozimat.fozimat_github.db
 
+import android.net.Uri
 import android.provider.BaseColumns
 
-internal class DatabaseContract {
+object DatabaseContract {
 
-    internal class NoteColumns : BaseColumns {
+    const val AUTHORITY = "com.fozimat.fozimat_github"
+    const val SCHEME = "content"
+
+    class NoteColumns : BaseColumns {
         companion object {
             const val TABLE_NAME = "tb_favorite"
             const val LOGIN = "login"
@@ -16,6 +20,11 @@ internal class DatabaseContract {
             const val FOLLOWING = "following"
             const val AVATAR = "avatar"
             const val FAVORITE = "favorite"
+
+            val CONTENT_URI: Uri = Uri.Builder().scheme(SCHEME)
+                    .authority(AUTHORITY)
+                    .appendPath(TABLE_NAME)
+                    .build()
         }
     }
 }

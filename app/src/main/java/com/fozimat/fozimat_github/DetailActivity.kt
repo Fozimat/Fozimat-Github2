@@ -3,6 +3,7 @@ package com.fozimat.fozimat_github
 import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fozimat.fozimat_github.adapter.SectionsPagerAdapter
 import com.fozimat.fozimat_github.databinding.ActivityDetailBinding
+import com.fozimat.fozimat_github.db.DatabaseContract
 import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.AVATAR
 import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.COMPANY
 import com.fozimat.fozimat_github.db.DatabaseContract.NoteColumns.Companion.FAVORITE
@@ -37,6 +39,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var detailViewModel: DetailViewModel
     private lateinit var userHelper: UserHelper
     private var isFavorite: Boolean = false
+    private lateinit var uriWithId: Uri
 
     companion object {
         const val EXTRA_USERNAME = "extra_username"
@@ -169,7 +172,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         values.put(AVATAR, avatar)
         values.put(FAVORITE, favorite)
 
-        userHelper.insert(values)
+        contentResolver.insert(DatabaseContract.NoteColumns.CONTENT_URI, values)
 
         val message = resources.getString(R.string.add_success)
         showSnackbarMessage(message)
@@ -197,7 +200,8 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun deleteData() {
         val user = intent.getParcelableExtra<User>(EXTRA_USERNAME) as User
-        userHelper.deleteById(user.login.toString()).toLong()
+        uriWithId = Uri.parse("${DatabaseContract.NoteColumns.CONTENT_URI}/${user.login}")
+        contentResolver.delete(uriWithId, null, null)
         showSnackbarMessage("Data success deleted")
     }
 

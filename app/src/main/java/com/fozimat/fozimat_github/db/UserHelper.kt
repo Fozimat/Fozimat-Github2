@@ -47,12 +47,16 @@ class UserHelper(context: Context) {
             null)
     }
 
-    fun insert(values: ContentValues): Long {
+    fun insert(values: ContentValues?): Long {
         return database.insert(DATABASE_TABLE, null, values)
     }
 
     fun queryById(id: String): Cursor {
         return database.query(DATABASE_TABLE, null, "$LOGIN = ?", arrayOf(id), null, null, null, null)
+    }
+
+    fun update(id: String, values: ContentValues?): Int {
+        return database.update(DATABASE_TABLE, values, "$LOGIN = ?", arrayOf(id))
     }
 
     fun deleteById(id: String): Int {
