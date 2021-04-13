@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Fozimat-Github</string>
+    <string name="app_name">Consumer App</string>
     <string name="input_username">Input username</string>
     <string name="search_user">Search User</string>
     <!-- TODO: Remove or change this placeholder text -->

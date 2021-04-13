@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Reminder">
+    <SwitchPreference
+        android:icon="@drawable/ic_notifications_24px"
+        android:defaultValue="false"
+        android:key="Reminder"
+        android:title="Reminder at 9.00 AM" />
+    </PreferenceCategory>
+</PreferenceScreen>

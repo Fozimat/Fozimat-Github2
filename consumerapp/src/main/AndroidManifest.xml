@@ -3,10 +3,8 @@
     package="com.fozimat.consumerapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="com.fozimat.fozimat_github.READ_DATABASE"/>
-
-    <uses-permission android:name="com.fozimat.fozimat_github.WRITE_DATABASE"/>
+    <uses-permission android:name="com.fozimat.fozimat_github.READ_DATABASE" />
+    <uses-permission android:name="com.fozimat.fozimat_github.WRITE_DATABASE" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FozimatGithub">
         <activity android:name=".DetailFavActivity" />
-        <activity android:name=".FavoriteActivity" >
+        <activity android:name=".FavoriteActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

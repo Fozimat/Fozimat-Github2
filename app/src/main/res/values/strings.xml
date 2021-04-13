@@ -19,4 +19,9 @@
     <string name="reminder">Reminder</string>
     <string name="add_success">Success added to favorites</string>
     <string name="deleted_success">Data success deleted</string>
+    <string name="message">Lets check popular user and repository on Github</string>
+    <string name="reminder_9">Reminder at 9.00 AM</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="messageRepeat">Repeating alarm for daily reminder</string>
+    <string name="messageCancel">Turn off alarm for dialy reminder</string>
 </resources>

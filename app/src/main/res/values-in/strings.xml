@@ -19,4 +19,9 @@
     <string name="reminder">Pengingat</string>
     <string name="add_success">Berhasil ditambahkan ke favorit</string>
     <string name="deleted_success">Data berhasil dihapus</string>
+    <string name="message">Ayo check pengguna dan repositori terkenal di Github</string>
+    <string name="reminder_9">Pengingat di Jam 9 Pagi</string>
+    <string name="daily_reminder">Pengingat Harian</string>
+    <string name="messageRepeat">Ulang pengingat alarm harian</string>
+    <string name="messageCancel">Matikan alarm pengingat harian</string>
 </resources>
