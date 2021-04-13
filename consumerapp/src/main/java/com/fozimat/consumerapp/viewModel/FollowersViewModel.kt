@@ -27,13 +27,17 @@ class FollowersViewModel : ViewModel() {
         client.addHeader("Authorization", apiKey)
         client.addHeader("User-Agent", "request")
         client.get(url, object : AsyncHttpResponseHandler() {
-            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: ByteArray?) {
+            override fun onSuccess(
+                statusCode: Int,
+                headers: Array<out Header>?,
+                responseBody: ByteArray?
+            ) {
                 try {
                     val result = String(responseBody!!)
                     Log.d(TAG, result)
                     val respondArray = JSONArray(result)
 
-                    for(i in 0 until respondArray.length()) {
+                    for (i in 0 until respondArray.length()) {
                         val user = respondArray.getJSONObject(i)
                         val userList = User().apply {
                             login = user.getString("login")
@@ -47,7 +51,12 @@ class FollowersViewModel : ViewModel() {
                 }
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: ByteArray?, error: Throwable?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<out Header>?,
+                responseBody: ByteArray?,
+                error: Throwable?
+            ) {
                 when (statusCode) {
                     401 -> "$statusCode : Bad Request"
                     403 -> "$statusCode : Forbidden"
@@ -60,7 +69,7 @@ class FollowersViewModel : ViewModel() {
         })
     }
 
-    fun getFollowers() : LiveData<ArrayList<User>> {
+    fun getFollowers(): LiveData<ArrayList<User>> {
         return dataFollowers
     }
 }

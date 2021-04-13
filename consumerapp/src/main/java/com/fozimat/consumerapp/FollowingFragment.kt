@@ -1,10 +1,10 @@
 package com.fozimat.consumerapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fozimat.consumerapp.adapter.UserAdapter
@@ -16,7 +16,7 @@ class FollowingFragment : Fragment() {
     companion object {
         private const val ARG_USERNAME = "username"
 
-        fun newInstance(username : String?) : FollowingFragment {
+        fun newInstance(username: String?): FollowingFragment {
             val fragment = FollowingFragment()
             val bundle = Bundle()
             bundle.putString(ARG_USERNAME, username)
@@ -25,10 +25,10 @@ class FollowingFragment : Fragment() {
         }
     }
 
-    private var _binding : FragmentFollowBinding? = null
-    private lateinit var adapter : UserAdapter
+    private var _binding: FragmentFollowBinding? = null
+    private lateinit var adapter: UserAdapter
     private val binding get() = _binding!!
-    private lateinit var followingViewModel : FollowingViewModel
+    private lateinit var followingViewModel: FollowingViewModel
 
 
     override fun onCreateView(
@@ -48,16 +48,19 @@ class FollowingFragment : Fragment() {
     }
 
     private fun setFollowing() {
-        if(arguments != null) {
+        if (arguments != null) {
             val username = arguments?.getString(ARG_USERNAME)
-            followingViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(FollowingViewModel::class.java)
+            followingViewModel =
+                ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+                    FollowingViewModel::class.java
+                )
 
-            if(username != null) {
+            if (username != null) {
                 followingViewModel.setFollowing(username)
             }
 
-            followingViewModel.getFollowing().observe(viewLifecycleOwner, {usersItems ->
-                if(usersItems != null) {
+            followingViewModel.getFollowing().observe(viewLifecycleOwner, { usersItems ->
+                if (usersItems != null) {
                     adapter.setData(usersItems)
                     showLoading(false)
                 }

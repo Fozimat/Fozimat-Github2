@@ -8,7 +8,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.fozimat.consumerapp.databinding.ItemRowUserBinding
 import com.fozimat.consumerapp.model.User
 
-class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     private val mData = ArrayList<User>()
 
@@ -18,7 +18,8 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemRowUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
             with(binding) {
                 Glide.with(itemView.context)

@@ -21,46 +21,43 @@
         android:layout_toEndOf="@+id/img_avatar"
         android:orientation="horizontal">
 
-        <LinearLayout
-            style="@style/MyCustomRepoFollow">
+        <LinearLayout style="@style/MyCustomRepoFollow">
 
             <TextView
                 android:id="@+id/tvRepository"
-                style="@style/MyCustom_Zero"/>
+                style="@style/MyCustom_Zero" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/repositories"/>
+                android:text="@string/repositories" />
         </LinearLayout>
 
-        <LinearLayout
-            style="@style/MyCustomRepoFollow">
+        <LinearLayout style="@style/MyCustomRepoFollow">
 
             <TextView
                 android:id="@+id/tvFollowers"
-                style="@style/MyCustom_Zero"/>
+                style="@style/MyCustom_Zero" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/followers"/>
+                android:text="@string/followers" />
         </LinearLayout>
 
-        <LinearLayout
-          style="@style/MyCustomRepoFollow">
+        <LinearLayout style="@style/MyCustomRepoFollow">
 
             <TextView
                 android:id="@+id/tvFollowing"
-                style="@style/MyCustom_Zero"/>
+                style="@style/MyCustom_Zero" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/following"/>
+                android:text="@string/following" />
         </LinearLayout>
 
     </LinearLayout>
@@ -71,20 +68,20 @@
         android:layout_below="@id/img_avatar"
         android:textStyle="bold"
         android:textSize="24sp"
-        android:text="@string/name"/>
+        android:text="@string/name" />
 
     <TextView
         android:id="@+id/tv_company"
         style="@style/MyCustomTagName"
         android:layout_below="@id/tv_name"
-        android:text="@string/company"/>
+        android:text="@string/company" />
 
     <TextView
         android:id="@+id/tv_location"
         style="@style/MyCustomTagName"
         android:layout_marginBottom="10dp"
         android:layout_below="@id/tv_company"
-        android:text="@string/location"/>
+        android:text="@string/location" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
@@ -94,7 +91,7 @@
         app:tabIndicatorColor="@color/blue_300"
         app:tabIndicatorHeight="4dp"
         android:layout_below="@id/tv_location"
-        app:tabTextColor="@android:color/white"/>
+        app:tabTextColor="@android:color/white" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"

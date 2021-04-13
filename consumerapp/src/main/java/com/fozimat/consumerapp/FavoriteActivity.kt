@@ -2,7 +2,6 @@ package com.fozimat.consumerapp
 
 import android.content.Intent
 import android.database.ContentObserver
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -10,6 +9,7 @@ import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fozimat.consumerapp.adapter.FavoriteAdapter
 import com.fozimat.consumerapp.databinding.ActivityFavoriteBinding
@@ -43,7 +43,7 @@ class FavoriteActivity : AppCompatActivity() {
         val handlerThread = HandlerThread("DataObserver")
         handlerThread.start()
         val handler = Handler(handlerThread.looper)
-        val myObserver = object: ContentObserver(handler) {
+        val myObserver = object : ContentObserver(handler) {
             override fun onChange(selfChange: Boolean) {
                 loadUserAsync()
             }
@@ -51,11 +51,11 @@ class FavoriteActivity : AppCompatActivity() {
 
         contentResolver.registerContentObserver(CONTENT_URI, true, myObserver)
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             loadUserAsync()
         } else {
             val user = savedInstanceState.getParcelableArrayList<User>(EXTRA_STATE)
-            if(user != null) {
+            if (user != null) {
                 adapter.listUser = user
             }
         }
@@ -107,7 +107,7 @@ class FavoriteActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_settings -> {
                 val act = Intent(Settings.ACTION_LOCALE_SETTINGS)
                 startActivity(act)

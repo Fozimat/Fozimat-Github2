@@ -1,17 +1,16 @@
 package com.fozimat.consumerapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fozimat.consumerapp.adapter.SectionsPagerAdapter
 import com.fozimat.consumerapp.databinding.ActivityDetailBinding
-
 import com.fozimat.consumerapp.model.User
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -25,8 +24,8 @@ class DetailFavActivity : AppCompatActivity() {
 
         @StringRes
         private val TAB_TITLES = intArrayOf(
-                R.string.followers,
-                R.string.following
+            R.string.followers,
+            R.string.following
         )
 
     }
@@ -57,7 +56,7 @@ class DetailFavActivity : AppCompatActivity() {
     private fun setTitleFav() {
         val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
         user.name?.let {
-            supportActionBar?.title= it
+            supportActionBar?.title = it
         }
     }
 
@@ -65,9 +64,9 @@ class DetailFavActivity : AppCompatActivity() {
         val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
         binding.apply {
             Glide.with(this@DetailFavActivity)
-                    .load(user.avatar)
-                    .apply(RequestOptions())
-                    .into(imgAvatar)
+                .load(user.avatar)
+                .apply(RequestOptions())
+                .into(imgAvatar)
             tvFollowers.text = user.followers.toString()
             tvFollowing.text = user.following.toString()
             tvName.text = user.login
@@ -83,7 +82,7 @@ class DetailFavActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_settings -> {
                 val act = Intent(Settings.ACTION_LOCALE_SETTINGS)
                 startActivity(act)

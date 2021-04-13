@@ -6,6 +6,6 @@
         android:icon="@drawable/ic_settings_white_24dp"
         android:title="@string/settings"
         app:showAsAction="always"
-        android:orderInCategory="0"/>
+        android:orderInCategory="0" />
 
 </menu>

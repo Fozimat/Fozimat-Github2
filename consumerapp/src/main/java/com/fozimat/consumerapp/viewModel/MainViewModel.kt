@@ -10,7 +10,6 @@ import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
-import java.lang.Exception
 
 class MainViewModel : ViewModel() {
 
@@ -27,15 +26,19 @@ class MainViewModel : ViewModel() {
         val apiKey = BuildConfig.API_KEY
         client.addHeader("Authorization", apiKey)
         client.addHeader("User-Agent", "request")
-        client.get(url, object: AsyncHttpResponseHandler() {
-            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: ByteArray?) {
+        client.get(url, object : AsyncHttpResponseHandler() {
+            override fun onSuccess(
+                statusCode: Int,
+                headers: Array<out Header>?,
+                responseBody: ByteArray?
+            ) {
                 try {
                     val result = String(responseBody!!)
                     Log.d(TAG, result)
                     val respondObject = JSONObject(result)
                     val list = respondObject.getJSONArray("items")
 
-                    for(i in 0 until list.length()) {
+                    for (i in 0 until list.length()) {
                         val user = list.getJSONObject(i)
                         val userList = User().apply {
                             login = user.getString("login")
@@ -50,7 +53,12 @@ class MainViewModel : ViewModel() {
                 }
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: ByteArray?, error: Throwable?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<out Header>?,
+                responseBody: ByteArray?,
+                error: Throwable?
+            ) {
                 when (statusCode) {
                     401 -> "$statusCode : Bad Request"
                     403 -> "$statusCode : Forbidden"
@@ -63,7 +71,7 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    fun getUsers() : LiveData<ArrayList<User>> {
+    fun getUsers(): LiveData<ArrayList<User>> {
         return listUsers
     }
 }

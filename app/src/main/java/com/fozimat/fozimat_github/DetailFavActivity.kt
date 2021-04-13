@@ -195,7 +195,7 @@ class DetailFavActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun deleteData() {
         val user = intent.getParcelableExtra<User>(EXTRA_USERNAME_FAV) as User
-        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.name)
+        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user.name)
         contentResolver.delete(uriWithId, null, null)
         val message = resources.getString(R.string.deleted_success)
         showSnackbarMessage(message)

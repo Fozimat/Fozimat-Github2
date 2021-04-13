@@ -8,15 +8,15 @@ import com.fozimat.consumerapp.FollowingFragment
 
 class SectionsPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
 
-    var username : String? = null
+    var username: String? = null
 
     override fun getItemCount(): Int {
         return 2
     }
 
     override fun createFragment(position: Int): Fragment {
-        var fragment : Fragment? = null
-        when(position) {
+        var fragment: Fragment? = null
+        when (position) {
             0 -> fragment = FollowerFragment.newInstance(username)
             1 -> fragment = FollowingFragment.newInstance(username)
         }

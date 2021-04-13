@@ -24,8 +24,12 @@ class DetailViewModel : ViewModel() {
         val apiKey = BuildConfig.API_KEY
         client.addHeader("Authorization", apiKey)
         client.addHeader("User-Agent", "request")
-        client.get(url, object: AsyncHttpResponseHandler() {
-            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: ByteArray?) {
+        client.get(url, object : AsyncHttpResponseHandler() {
+            override fun onSuccess(
+                statusCode: Int,
+                headers: Array<out Header>?,
+                responseBody: ByteArray?
+            ) {
                 try {
                     val result = String(responseBody!!)
                     Log.d(TAG, result)
@@ -41,12 +45,17 @@ class DetailViewModel : ViewModel() {
                         avatar = respondObject.getString("avatar_url")
                     }
                     detailUser.postValue(user)
-                } catch(e: Exception) {
+                } catch (e: Exception) {
                     Log.d("Exception: ", e.message.toString())
                 }
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: ByteArray?, error: Throwable?) {
+            override fun onFailure(
+                statusCode: Int,
+                headers: Array<out Header>?,
+                responseBody: ByteArray?,
+                error: Throwable?
+            ) {
                 when (statusCode) {
                     401 -> "$statusCode : Bad Request"
                     403 -> "$statusCode : Forbidden"
@@ -59,7 +68,7 @@ class DetailViewModel : ViewModel() {
         })
     }
 
-    fun getDetailUser() : LiveData<User> {
+    fun getDetailUser(): LiveData<User> {
         return detailUser
     }
 }
