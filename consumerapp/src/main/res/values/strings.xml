@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fozimat-Github</string>
+    <string name="input_username">Input username</string>
+    <string name="search_user">Search User</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="detail_user">Detail User</string>
+    <string name="name">Name</string>
+    <string name="search">Search</string>
+    <string name="location">Location</string>
+    <string name="company">Company</string>
+    <string name="following">Following</string>
+    <string name="_zero">0</string>
+    <string name="followers">Followers</string>
+    <string name="repositories">Repositories</string>
+    <string name="settings">Settings</string>
+    <string name="login">Username</string>
+    <string name="favorite">Favorite</string>
+    <string name="reminder">Reminder</string>
+    <string name="add_success">Success added to favorites</string>
+    <string name="deleted_success">Data success deleted</string>
+</resources>
